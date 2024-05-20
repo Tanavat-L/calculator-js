@@ -20,7 +20,7 @@ function operate(num1, operand, num2){
             return add(num1,num2);
         
         case '-':
-            return subtract(num1,num);
+            return subtract(num1,num2);
 
         case '*':
             return multiply(num1,num2);
@@ -47,10 +47,11 @@ function wireNumbers(){
     for(let i = 0; i < numbers.length; i++){
         numbers[i].addEventListener("click", (e) =>{
             if(operator === ''){
-                num1 += (i+1);
+                if(i != 10)
+                num1 += (i+1)%10;
             }
             else{
-                num2 += (i+1);
+                num2 += (i+1)%10;
             }
             display(num1,operator, num2);
         });
@@ -62,7 +63,7 @@ function wireOperators(){
     let operators = document.querySelectorAll(".operator");
     for(let i = 0; i< operators.length; i++){
         operators[i].addEventListener("click", (e) => {
-            if(num1){
+            if(num1 && !num2){
                 switch (i){
                     case 0:
                         operator = '/';
@@ -77,6 +78,26 @@ function wireOperators(){
                         operator = '+';
                         break;
                 }    
+            }
+            else if (num1 && operator && num2){
+                num1 = operate(+num1,operator,+num2).toString();
+                num2 = '';
+                operator = '';
+                display(num1,operator,num2);
+                switch (i){
+                    case 0:
+                        operator = '/';
+                        break;
+                    case 1:
+                        operator = '*';
+                        break;
+                    case 2:
+                        operator = '-';
+                        break;
+                    case 3: 
+                        operator = '+';
+                        break;
+                } 
             }
             display(num1,operator,num2);
         })
