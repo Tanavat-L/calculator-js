@@ -56,6 +56,9 @@ function wireNumbers(){
     let numbers = document.querySelectorAll(".number");
     for(let i = 0; i < numbers.length; i++){
         numbers[i].addEventListener("click", (e) =>{
+            if(num1.includes("Infinity") || num1.includes("NaN")){
+                num1 = '';
+            }
             if(operator === ''){
                 num1 += (i+1)%10;
             }
@@ -72,7 +75,7 @@ function wireOperators(){
     let operators = document.querySelectorAll(".operator");
     for(let i = 0; i< operators.length; i++){
         operators[i].addEventListener("click", (e) => {
-            if(num1 && !num2){
+            if(num1 && !num2 && !num1.includes("Infinity") && !num1.includes("NaN")){
                 switch (i){
                     case 0 :
                         operator = '%';
