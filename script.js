@@ -14,6 +14,10 @@ function divide(num1,num2){
     return num1 / num2;
 }
 
+function mod(num1,num2){
+    return num1 % num2;
+}
+
 function operate(num1, operand, num2){
     switch (operand){
         case '+':
@@ -27,6 +31,9 @@ function operate(num1, operand, num2){
 
         case '/':
             return divide(num1,num2);
+
+        case "%":
+            return mod(num1,num2);
     }
 }
 
@@ -42,6 +49,7 @@ function wireButtons(){
     wireEqual();
     wirePeriod();
     wireDelete();
+    wirePolarity();
 }
 
 function wireNumbers(){
@@ -66,16 +74,19 @@ function wireOperators(){
         operators[i].addEventListener("click", (e) => {
             if(num1 && !num2){
                 switch (i){
-                    case 0:
-                        operator = '/';
+                    case 0 :
+                        operator = '%';
                         break;
                     case 1:
-                        operator = '*';
+                        operator = '/';
                         break;
                     case 2:
+                        operator = '*';
+                        break;
+                    case 3:
                         operator = '-';
                         break;
-                    case 3: 
+                    case 4: 
                         operator = '+';
                         break;
                 }    
@@ -86,20 +97,26 @@ function wireOperators(){
                 operator = '';
                 display(num1,operator,num2);
                 switch (i){
-                    case 0:
-                        operator = '/';
+                    case 0 :
+                        operator = '%';
                         break;
                     case 1:
-                        operator = '*';
+                        operator = '/';
                         break;
                     case 2:
+                        operator = '*';
+                        break;
+                    case 3:
                         operator = '-';
                         break;
-                    case 3: 
+                    case 4: 
                         operator = '+';
                         break;
                 } 
             }
+            else if (!num1 && operators[i].id === 'subtract'){
+                num1 = "-";
+            }   
             display(num1,operator,num2);
         })
     }
@@ -136,7 +153,7 @@ function wirePeriod(){
         else if(num1 && !num2 && !operator && !num1.includes(".")){
             num1 += ".";
         }
-        else if (!num2){
+        else if (!num2 && operator){
             num2 += "0.";
         }
         else if (num2 && !num2.includes(".")){
@@ -162,6 +179,24 @@ function wireDelete(){
     });
 }
 
+function wirePolarity(){
+    let polarity = document.querySelector(".polarity");
+    polarity.addEventListener("click", (e) => {
+        if(num1.charAt(0) === '-' && !num2){
+            num1 = num1.slice(1);
+        }
+        else if(num1 && !num2){
+            num1 = '-' + num1;
+        }
+        else if(num2.charAt(0) === '-'){
+            num2 = num2.slice(1);
+        }
+        else if(num2){
+            num2 = '-' + num2;
+        }
+        display(num1,operator,num2);
+    });
+}
 
 let num1 ='';
 let num2 ='';
