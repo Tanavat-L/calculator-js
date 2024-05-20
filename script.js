@@ -41,6 +41,7 @@ function wireButtons(){
     wireClear();
     wireEqual();
     wirePeriod();
+    wireDelete();
 }
 
 function wireNumbers(){
@@ -143,6 +144,22 @@ function wirePeriod(){
         }
         display(num1,operator,num2);
     })
+}
+
+function wireDelete(){
+    let deleteButton = document.querySelector(".delete");
+    deleteButton.addEventListener("click", (e) =>{
+        if(num2){
+           num2 = num2.slice(0,-1);
+        }
+        else if(operator){
+            operator = '';
+        }
+        else if(num1){
+            num1 = num1.slice(0,-1);
+        }
+        display(num1,operator,num2);
+    });
 }
 
 
