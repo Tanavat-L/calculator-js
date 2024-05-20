@@ -36,8 +36,14 @@ function display(num1,operator,num2){
 }
 
 function wireButtons(){
+    wireNumbers();
+    wireOperators();
+    wireClear();
+    wireEqual();
+}
+
+function wireNumbers(){
     let numbers = document.querySelectorAll(".number");
-    let operators = document.querySelectorAll(".operator");
     for(let i = 0; i < numbers.length; i++){
         numbers[i].addEventListener("click", (e) =>{
             if(operator === ''){
@@ -50,6 +56,10 @@ function wireButtons(){
         });
     }
 
+}
+
+function wireOperators(){
+    let operators = document.querySelectorAll(".operator");
     for(let i = 0; i< operators.length; i++){
         operators[i].addEventListener("click", (e) => {
             if(num1){
@@ -72,6 +82,29 @@ function wireButtons(){
         })
     }
 }
+
+function wireClear(){
+    let clear = document.querySelector(".clear");
+    clear.addEventListener("click", (e) => {
+        num1 = '';
+        num2 = '';
+        operator = '';
+        display(num1,operator,num2);
+    });
+}
+
+function wireEqual(){
+    let equal = document.querySelector(".equal");
+    equal.addEventListener("click", (e) =>{
+        if(num1 && num2 && operator){
+            num1 = operate(+num1,operator,+num2).toString();
+            num2 = '';
+            operator = '';
+            display(num1,operator,num2);
+        }
+    });
+}
+
 
 let num1 ='';
 let num2 ='';
