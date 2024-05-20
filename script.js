@@ -40,6 +40,7 @@ function wireButtons(){
     wireOperators();
     wireClear();
     wireEqual();
+    wirePeriod();
 }
 
 function wireNumbers(){
@@ -47,7 +48,6 @@ function wireNumbers(){
     for(let i = 0; i < numbers.length; i++){
         numbers[i].addEventListener("click", (e) =>{
             if(operator === ''){
-                if(i != 10)
                 num1 += (i+1)%10;
             }
             else{
@@ -118,12 +118,31 @@ function wireEqual(){
     let equal = document.querySelector(".equal");
     equal.addEventListener("click", (e) =>{
         if(num1 && num2 && operator){
-            num1 = operate(+num1,operator,+num2).toString();
+            num1 = (Math.round(operate(+num1,operator,+num2)*10000)/10000).toString();
             num2 = '';
             operator = '';
             display(num1,operator,num2);
         }
     });
+}
+
+function wirePeriod(){
+    let period = document.querySelector(".period");
+    period.addEventListener("click", (e) => {
+        if(!num1){
+            num1 += "0.";
+        }
+        else if(num1 && !num2 && !operator && !num1.includes(".")){
+            num1 += ".";
+        }
+        else if (!num2){
+            num2 += "0.";
+        }
+        else if (num2 && !num2.includes(".")){
+            num2 += ".";
+        }
+        display(num1,operator,num2);
+    })
 }
 
 
