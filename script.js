@@ -39,7 +39,7 @@ function operate(num1, operand, num2){
 
 function display(num1,operator,num2){
     let display = document.querySelector(".display");
-    display.textContent = `${num1}${operator}${num2}`;
+    display.textContent = `${num1} ${operator} ${num2}`;
 }
 
 function wireButtons(){
@@ -139,7 +139,7 @@ function wireEqual(){
     let equal = document.querySelector(".equal");
     equal.addEventListener("click", (e) =>{
         if(num1 && num2 && operator){
-            num1 = (Math.round(operate(+num1,operator,+num2)*10000)/10000).toString();
+            num1 = (Math.round(operate(+num1,operator,+num2)*100000)/100000).toString();
             num2 = '';
             operator = '';
             display(num1,operator,num2);
